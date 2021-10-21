@@ -1,0 +1,10 @@
+=============== Notes =================================
+The 3 grayscale datasets (i.e., BEE1_gray,
+BEE2_1S_gray, BEE_4_gray) will be used in the training and testing of ANNs. The other 3 datasets
+(i.e., BEE1, BEE2_1S, BEE_4) will be used in the training and testing of ConvNets. The audio datasets
+can be used in the training and testing of both ANNs and ConvNets.
+
+Each dataset consists of 6 pickle files: train_X.pck, train_Y.pck, test_X.pck, test_Y.pck,
+valid_X.pck, valid_Y.pck. The _X files include examples, the _Y files contain the correspond-
+ing targets (i.e., ground truth). The train_ and test_ files can be used in training and testing.
+The valid_ files can be used in validation.
