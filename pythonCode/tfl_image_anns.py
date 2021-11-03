@@ -20,7 +20,7 @@ def load(file_name):
     return obj
 
 ## Paths to all datasets. Change accordingly.
-PATH = '/home/vladimir/teaching/AI/project_01/datasets/tflearn/'
+PATH = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
 BEE1_gray_base_path    = PATH + 'BEE1_gray/'
 BEE2_1S_gray_base_path = PATH + 'BEE2_1S_gray/'
 BEE4_gray_base_path    = PATH + 'BEE4_gray/'
@@ -113,6 +113,23 @@ def make_image_ann_model():
     model = tflearn.DNN(network)
     return model
 
+def make_3_layer_254X10_relu():
+    input_layer = input_data(shape=[None, 64, 64, 1])
+    fc_layer_1 = fully_connected(input_layer, 254,
+                                 activation='relu',
+                                name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                 activation='softmax',
+                                 name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                 activation='softmax',
+                                 name='fc_layer_3')                             
+    network = regression(fc_layer_3,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=0.1)
+    model = tflearn.DNN(network)
+    return model
 ### Note that the load function must mimick the
 ### the archictecture of the persisted model!!!
 def load_image_ann_model(model_path):
@@ -126,7 +143,20 @@ def load_image_ann_model(model_path):
     model = tflearn.DNN(fc_layer_2)
     model.load(model_path)
     return model
-
+def load_3_layer_254X10_relu(model_path):
+    input_layer = input_data(shape=[None, 64, 64, 1])
+    fc_layer_1 = fully_connected(input_layer, 254,
+                                activation='relu',
+                                name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                activation='softmax',
+                                name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                activation='softmax',
+                                name='fc_layer_3')     
+    model = tflearn.DNN(fc_layer_3)
+    model.load(model_path)
+    return model
 ### test a tfl network model on valid_X and valid_Y.  
 def test_tfl_image_ann_model(network_model, valid_X, valid_Y):
     results = []
@@ -138,7 +168,7 @@ def test_tfl_image_ann_model(network_model, valid_X, valid_Y):
 
 ###  train a tfl model on train_X, train_Y, test_X, test_Y.
 def train_tfl_image_ann_model(model, train_X, train_Y, test_X, test_Y, num_epochs=2, batch_size=10):
-  tf.reset_default_graph()
+  tf.compat.v1.reset_default_graph()
   model.fit(train_X, train_Y, n_epoch=num_epochs,
             shuffle=True,
             validation_set=(test_X, test_Y),

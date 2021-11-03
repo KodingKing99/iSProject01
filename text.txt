@@ -8,3 +8,6 @@ Each dataset consists of 6 pickle files: train_X.pck, train_Y.pck, test_X.pck, t
 valid_X.pck, valid_Y.pck. The _X files include examples, the _Y files contain the correspond-
 ing targets (i.e., ground truth). The train_ and test_ files can be used in training and testing.
 The valid_ files can be used in validation.
+
+Command to run python
+ /home/nicksorenson/anaconda3/envs/intellSys/bin/python /home/nicksorenson/School/intellSys/project01/tfl_image_anns.py
