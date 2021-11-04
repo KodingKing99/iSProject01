@@ -172,7 +172,7 @@ def load_image_ann_model(model_path):
     return model
 def load_3_layer_254X10_relu(model_path):
     input_layer = input_data(shape=[None, 64, 64, 1])
-    fc_layer_1 = fully_connected(input_layer, 254,
+    fc_layer_1 = fully_connected(input_layer, 256,
                                 activation='relu',
                                 name='fc_layer_1')
     fc_layer_2 = fully_connected(fc_layer_1, 10,
@@ -206,7 +206,7 @@ def load_4_layer_1024X512X256X2_sigmoid(model_path):
     return model
 def load_and_train_254X10_relu(model_path, learn_rate=0.1):
     input_layer = input_data(shape=[None, 64, 64, 1])
-    fc_layer_1 = fully_connected(input_layer, 254,
+    fc_layer_1 = fully_connected(input_layer, 256,
                                 activation='relu',
                                 name='fc_layer_1')
     fc_layer_2 = fully_connected(fc_layer_1, 10,
