@@ -154,7 +154,29 @@ def make_4_layer_1024X512X256X2_sigmoid(learn_rate=0.1):
                          learning_rate=learn_rate)
     model = tflearn.DNN(network)
     return model
-                    
+def make_4_layer_512X256X10X2_relu(learn_rate=0.1):
+    input_layer = input_data(shape=[None, 64, 64, 1])
+    fc_layer_1 = fully_connected(input_layer, 512,
+                                 activation='relu',
+                                name='fc_layer_1',
+                                )
+    fc_layer_1 = dropout(fc_layer_1, 0.5)
+    fc_layer_2 = fully_connected(fc_layer_1, 256,
+                                activation='relu',
+                                name='fc_layer_2') 
+    fc_layer_3 = fully_connected(fc_layer_2, 10,
+                                 activation='softmax',
+                                 name='fc_layer_3')
+    fc_layer_4 = fully_connected(fc_layer_3, 2,
+                                 activation='softmax',
+                                 name='fc_layer_4')                             
+    network = regression(fc_layer_4,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    return model
+          
 
         
 ### Note that the load function must mimick the
@@ -221,6 +243,29 @@ def load_and_train_254X10_relu(model_path, learn_rate=0.1):
                          learning_rate=learn_rate)  
     model = tflearn.DNN(network)
     model.load(model_path)
+    return model
+def load_4_layer_512X256X10X2_relu(model_path, learn_rate=0.1):
+    input_layer = input_data(shape=[None, 64, 64, 1])
+    fc_layer_1 = fully_connected(input_layer, 512,
+                                 activation='relu',
+                                name='fc_layer_1',
+                                )
+    fc_layer_1 = dropout(fc_layer_1, 0.5)
+    fc_layer_2 = fully_connected(fc_layer_1, 256,
+                                activation='relu',
+                                name='fc_layer_2') 
+    fc_layer_3 = fully_connected(fc_layer_2, 10,
+                                 activation='softmax',
+                                 name='fc_layer_3')
+    fc_layer_4 = fully_connected(fc_layer_3, 2,
+                                 activation='softmax',
+                                 name='fc_layer_4')                             
+    network = regression(fc_layer_4,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    model = model.load(model_path)
     return model
 ### test a tfl network model on valid_X and valid_Y.  
 def test_tfl_image_ann_model(network_model, valid_X, valid_Y):

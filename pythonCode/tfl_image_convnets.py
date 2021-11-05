@@ -156,5 +156,3 @@ def train_tfl_image_convnet_model(model, train_X, train_Y, test_X, test_Y, num_e
 ### validating is testing on valid_X and valid_Y.
 def validate_tfl_image_convnet_model(model, valid_X, valid_Y):
     return test_tfl_image_convnet_model(model, valid_X, valid_Y)
-  
-

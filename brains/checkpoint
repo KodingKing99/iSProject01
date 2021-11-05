@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/brains/256X10_relu_bigboy.tfl"
-all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/brains/256X10_relu_bigboy.tfl"
+model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/brains/512X256X10_relu_bigboy_v1.tfl"
+all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/brains/512X256X10_relu_bigboy_v1.tfl"
