@@ -37,9 +37,9 @@ def validate3(ann):
                                         BEE4_gray_valid_X,
                                         BEE4_gray_valid_Y)
     print(f'BEE3: {validC}')
-    if validA > 0.7 and validB > 0.7 and validC > 0.7:
-        # myann.save(NETPATH + '512X256X10_relu_bigboy_75ALL_'+ str(i)+ '.tfl') 
-        ann.save(NETPATH + '256X10_relu_bigData_70ALL.tfl') 
+    # if validA > 0.7 and validB > 0.7 and validC > 0.7:
+    #     # myann.save(NETPATH + '512X256X10_relu_bigboy_75ALL_'+ str(i)+ '.tfl') 
+    #     ann.save(NETPATH + '256X10_relu_bigData_70ALL.tfl') 
 def makeBigData():
     print("making big data...")
     print("making big_data_train_X...")
@@ -81,7 +81,7 @@ print(big_data_test_Y.shape)
 #     # del big_data_train_X
 #     validate3(myann)
 #     myann.save(NETPATH + '256X10_relu_bigData_lr_' + str(i) + '.tfl')
-myann = load_and_train_254X10_relu(NETPATH + '256X10_relu_bigData_lr_0.04.tfl', learn_rate=0.02)
-train_tfl_image_ann_model(myann, big_data_train_X, big_data_train_Y, big_data_test_X, big_data_test_Y, num_epochs=10)
+myann = load_and_train_254X10_relu(NETPATH + '256X10_relu_bigData_lr_0.02_10_ep.tfl', learn_rate=0.04)
+train_tfl_image_ann_model(myann, big_data_train_X, big_data_train_Y, big_data_test_X, big_data_test_Y, num_epochs=20)
 validate3(myann)
-myann.save(NETPATH + '256X10_relu_bigData_lr_0.02_10_ep.tfl')
+myann.save(NETPATH + 'image_ann.tfl')
