@@ -20,7 +20,8 @@ def load(file_name):
     return obj
 
 ## Paths to all datasets. Change accordingly.
-PATH = '/home/vladimir/teaching/AI/project_01/datasets/tflearn/'
+PATH = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
+NETPATH = '/home/nicksorenson/School/intellSys/project01/cnBrains/'
 BEE1_path     = PATH + 'BEE1/'
 BEE2_1S_path  = PATH + 'BEE2_1S/'
 BEE4_path     = PATH + 'BEE4/'
@@ -97,7 +98,7 @@ assert BEE4_test_X.shape[0]  == BEE4_test_Y.shape[0]
 assert BEE4_valid_X.shape[0] == BEE4_valid_Y.shape[0]
 
 ### here's an example of how to make an ConvNet with tflearn.
-def make_image_convnet_model():
+def make_image_convnet_model(learn_rate=0.1):
     input_layer = input_data(shape=[None, 64, 64, 3])
     conv_layer_1 = conv_2d(input_layer,
                            nb_filter=8,
@@ -113,10 +114,104 @@ def make_image_convnet_model():
                                  name='fc_layer_2')
     network = regression(fc_layer_2, optimizer='sgd',
                          loss='categorical_crossentropy',
-                         learning_rate=0.1)
+                         learning_rate=learn_rate)
     model = tflearn.DNN(network)
     return model
-
+def make_1conv_256X10_relu_model(learn_rate=0.1):
+    input_layer = input_data(shape=[None, 64, 64, 3])
+    conv_layer_1 = conv_2d(input_layer,
+                                nb_filter=10,
+                                filter_size=5,
+                                activation='relu',
+                                name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    fc_layer_1 = fully_connected(pool_layer_1, 256,
+                                    activation='relu',
+                                    name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                    activation='softmax',
+                                    name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                    activation='softmax',
+                                    name='fc_layer_3')
+    network = regression(fc_layer_3, optimizer='sgd',
+                                loss='categorical_crossentropy',
+                                learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    return model
+def load_1conv_256X10_relu_model(model_path, learn_rate=0.1):
+    input_layer = input_data(shape=[None, 64, 64, 3])
+    conv_layer_1 = conv_2d(input_layer,
+                                nb_filter=10,
+                                filter_size=5,
+                                activation='relu',
+                                name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    fc_layer_1 = fully_connected(pool_layer_1, 256,
+                                    activation='relu',
+                                    name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                    activation='softmax',
+                                    name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                    activation='softmax',
+                                    name='fc_layer_3')
+    network = regression(fc_layer_3, optimizer='sgd',
+                                loss='categorical_crossentropy',
+                                learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    model.load(model_path)
+    return model
+def make_1conv_40Filter_256X10_relu_model(learn_rate=0.04):
+    input_layer = input_data(shape=[None, 64, 64, 3])
+    conv_layer_1 = conv_2d(input_layer,
+                                nb_filter=40,
+                                filter_size=5,
+                                activation='relu',
+                                name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    fc_layer_1 = fully_connected(pool_layer_1, 256,
+                                    activation='relu',
+                                    name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                    activation='softmax',
+                                    name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                    activation='softmax',
+                                    name='fc_layer_3')
+    network = regression(fc_layer_3, optimizer='sgd',
+                                loss='categorical_crossentropy',
+                                learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    return model
+def make_2conv_40X10Filter_256X10_relu_model(learn_rate=0.04):
+    input_layer = input_data(shape=[None, 64, 64, 3])
+    conv_layer_1 = conv_2d(input_layer,
+                                nb_filter=40,
+                                filter_size=5,
+                                activation='relu',
+                                name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    conv_layer_2 = conv_2d(pool_layer_1,
+                                nb_filter=10,
+                                filter_size=2,
+                                activation='relu',
+                                name='conv_layer_2')
+    pool_layer_2 = max_pool_2d(conv_layer_2, 2, name='pool_layer_2')
+    fc_layer_1 = fully_connected(pool_layer_2, 256,
+                                    activation='relu',
+                                    name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                    activation='softmax',
+                                    name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                    activation='softmax',
+                                    name='fc_layer_3')
+    network = regression(fc_layer_3, optimizer='sgd',
+                                loss='categorical_crossentropy',
+                                learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    return model
 def load_image_convnet_model(model_path):
     input_layer = input_data(shape=[None, 64, 64, 3])
     conv_layer_1 = conv_2d(input_layer,
@@ -135,6 +230,58 @@ def load_image_convnet_model(model_path):
     model.load(model_path)
     return model
 
+def load_1conv_40Filter_256X10_relu_model(model_path, learn_rate=0.04):
+    input_layer = input_data(shape=[None, 64, 64, 3])
+    conv_layer_1 = conv_2d(input_layer,
+                                nb_filter=40,
+                                filter_size=5,
+                                activation='relu',
+                                name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    fc_layer_1 = fully_connected(pool_layer_1, 256,
+                                    activation='relu',
+                                    name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                    activation='softmax',
+                                    name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                    activation='softmax',
+                                    name='fc_layer_3')
+    network = regression(fc_layer_3, optimizer='sgd',
+                                loss='categorical_crossentropy',
+                                learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    model.load(model_path)
+    return model
+def load_2conv_40X10Filter_256X10_relu_model(model_path, learn_rate=0.04):
+    input_layer = input_data(shape=[None, 64, 64, 3])
+    conv_layer_1 = conv_2d(input_layer,
+                                nb_filter=40,
+                                filter_size=5,
+                                activation='relu',
+                                name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    conv_layer_2 = conv_2d(pool_layer_1,
+                                nb_filter=10,
+                                filter_size=2,
+                                activation='relu',
+                                name='conv_layer_2')
+    pool_layer_2 = max_pool_2d(conv_layer_2, 2, name='pool_layer_2')
+    fc_layer_1 = fully_connected(pool_layer_2, 256,
+                                    activation='relu',
+                                    name='fc_layer_1')
+    fc_layer_2 = fully_connected(fc_layer_1, 10,
+                                    activation='softmax',
+                                    name='fc_layer_2')
+    fc_layer_3 = fully_connected(fc_layer_2, 2,
+                                    activation='softmax',
+                                    name='fc_layer_3')
+    network = regression(fc_layer_3, optimizer='sgd',
+                                loss='categorical_crossentropy',
+                                learning_rate=learn_rate)
+    model = tflearn.DNN(network)
+    model.load(model_path)
+    return model
 def test_tfl_image_convnet_model(network_model, validX, validY):
     results = []
     for i in range(len(validX)):
@@ -145,7 +292,7 @@ def test_tfl_image_convnet_model(network_model, validX, validY):
 
 ###  train a tfl convnet model on train_X, train_Y, test_X, test_Y.
 def train_tfl_image_convnet_model(model, train_X, train_Y, test_X, test_Y, num_epochs=2, batch_size=10):
-  tf.reset_default_graph()
+  tf.compat.v1.reset_default_graph()
   model.fit(train_X, train_Y, n_epoch=num_epochs,
             shuffle=True,
             validation_set=(test_X, test_Y),

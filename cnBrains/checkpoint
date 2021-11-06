@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/cnBrains/1conv_256X10_relu_ran_3.cn"
+all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/cnBrains/1conv_256X10_relu_ran_3.cn"

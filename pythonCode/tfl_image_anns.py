@@ -21,7 +21,7 @@ def load(file_name):
 
 ## Paths to all datasets. Change accordingly.
 PATH = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
-NETPATH = '/home/nicksorenson/School/intellSys/project01/brains/'
+NETPATH = '/home/nicksorenson/School/intellSys/project01/annBrains/'
 BEE1_gray_base_path    = PATH + 'BEE1_gray/'
 BEE2_1S_gray_base_path = PATH + 'BEE2_1S_gray/'
 BEE4_gray_base_path    = PATH + 'BEE4_gray/'
