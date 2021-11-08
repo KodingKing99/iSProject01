@@ -9,7 +9,7 @@ import pickle
 import numpy as np
 import tensorflow as tf
 import tflearn
-from tflearn.layers.core import input_data, fully_connected
+from tflearn.layers.core import dropout, input_data, fully_connected
 from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.estimator import regression
 
@@ -20,7 +20,9 @@ def load(file_name):
     return obj
 
 ## Paths to all datasets. Change accordingly.
-base_path = '/home/vladimir/teaching/AI/project_01/datasets/tflearn/'
+base_path = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
+NETPATH = '/home/nicksorenson/School/intellSys/project01/brains/cnAudioBrains/'
+
 BUZZ1_base_path = base_path + 'BUZZ1/'
 BUZZ2_base_path = base_path + 'BUZZ2/'
 BUZZ3_base_path = base_path + 'BUZZ3/'
@@ -133,7 +135,193 @@ def load_audio_convnet_model(model_path):
     model = tflearn.DNN(fc_layer_2)
     model.load(model_path)
     return model
-
+def __200X10X3_1conv_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=3,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 4, name='pool_layer')
+    net = fully_connected(net, 200,
+                            activation='relu',
+                            name='fc_layer_1')
+    net = fully_connected(net, 10,
+                            activation='softmax',
+                            name='fc_layer_2')
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_200X10_relu_1conv(learn_rate=0.04):
+    return __200X10X3_1conv_template(learn_rate)
+def load_200X10_relu_1conv(model_path, learn_rate=0.04):
+    model = __200X10X3_1conv_template(learn_rate)
+    model.load(model_path)
+    return model
+def __256X10X3_1conv_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=5,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 4, name='pool_layer')
+    net = fully_connected(net, 256,
+                            activation='relu',
+                            name='fc_layer_1')
+    net = fully_connected(net, 10,
+                            activation='softmax',
+                            name='fc_layer_2')
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_256X10_relu_1conv(learn_rate=0.04):
+    return __256X10X3_1conv_template(learn_rate)
+def load_256X10_relu_1conv(model_path, learn_rate=0.04):
+    model = __256X10X3_1conv_template(learn_rate)
+    model.load(model_path)
+    return model
+def __256X10X3_1conv_bigFilt_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=10,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 4, name='pool_layer')
+    net = fully_connected(net, 256,
+                            activation='relu',
+                            name='fc_layer_1')
+    net = fully_connected(net, 10,
+                            activation='softmax',
+                            name='fc_layer_2')
+    # net = dropout(net, 0.9)
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_256X10_relu_1conv_bigFilt(learn_rate=0.04):
+    return __256X10X3_1conv_bigFilt_template(learn_rate)
+def load_256X10_relu_1conv_bigFilt(model_path, learn_rate=0.04):
+    model = __256X10X3_1conv_bigFilt_template(learn_rate)
+    model.load(model_path)
+    return model
+def __100X20X3_1conv_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=5,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 4, name='pool_layer')
+    net = fully_connected(net, 100,
+                            activation='relu',
+                            name='fc_layer_1')
+    net = fully_connected(net, 20,
+                            activation='softmax',
+                            name='fc_layer_2')
+    # net = dropout(net, 0.9)
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_100X20X3_1conv(learn_rate=0.04):
+    return __100X20X3_1conv_template(learn_rate)
+def load_100X20X3_relu_1conv(model_path, learn_rate=0.04):
+    model = __100X20X3_1conv_template(learn_rate)
+    model.load(model_path)
+    return model
+def __100X20X3_1conv_bigfilt_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=10,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 4, name='pool_layer')
+    net = fully_connected(net, 100,
+                            activation='relu',
+                            name='fc_layer_1')
+    net = fully_connected(net, 20,
+                            activation='softmax',
+                            name='fc_layer_2')
+    # net = dropout(net, 0.9)
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_100X20X3_1conv_bigfilt(learn_rate=0.04):
+    return __100X20X3_1conv_bigfilt_template(learn_rate)
+def load_100X20X2_relu_1conv_bigfilt(model_path, learn_rate=0.04):
+    model = __100X20X3_1conv_bigfilt_template(learn_rate)
+    model.load(model_path)
+    return model
+def __64X64X3_1conv_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=5,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 4, name='pool_layer')
+    net = fully_connected(net, 64,
+                            activation='relu',
+                            name='fc_layer_1')
+    net = fully_connected(net, 64,
+                            activation='softmax',
+                            name='fc_layer_2')
+    # net = dropout(net, 0.9)
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_64X64X3_relu_1conv(learn_rate=0.04):
+    return __64X64X3_1conv_template(learn_rate)
+def load_64X64X3_relu_1conv(model_path, learn_rate=0.04):
+    model = __64X64X3_1conv_template(learn_rate)
+    model.load(model_path)
+    return model
+def __32X_1conv_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=10,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 2, name='pool_layer')
+    net = fully_connected(net, 32,
+                            activation='relu',
+                            name='fc_layer_1')
+    # net = fully_connected(net, ,
+    #                         activation='softmax',
+    #                         name='fc_layer_2')
+    # net = dropout(net, 0.9)
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_32_relu_1conv(learn_rate=0.04):
+    return __32X_1conv_template(learn_rate)
+def load_32_relu_1conv(model_path, learn_rate=0.04):
+    model = __32X_1conv_template(learn_rate)
+    model.load(model_path)
+    return model
 def test_tfl_audio_convnet_model(network_model, valid_X, valid_Y):
     results = []
     for i in range(len(valid_X)):
@@ -144,7 +332,7 @@ def test_tfl_audio_convnet_model(network_model, valid_X, valid_Y):
 
 ###  train a tfl model on train_X, train_Y, test_X, test_Y.
 def train_tfl_audio_convnet_model(model, train_X, train_Y, test_X, test_Y, num_epochs=2, batch_size=10):
-  tf.reset_default_graph()
+  tf.compat.v1.reset_default_graph()
   model.fit(train_X, train_Y, n_epoch=num_epochs,
             shuffle=True,
             validation_set=(test_X, test_Y),
