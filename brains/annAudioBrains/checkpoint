@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/brains/annAudioBrains/aud_ann.tfl"
+all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/brains/annAudioBrains/aud_ann.tfl"

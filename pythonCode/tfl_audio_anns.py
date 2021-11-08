@@ -9,7 +9,7 @@ import pickle
 import numpy as np
 import tensorflow as tf
 import tflearn
-from tflearn.layers.core import input_data, fully_connected
+from tflearn.layers.core import dropout, input_data, fully_connected
 from tflearn.layers.estimator import regression
 
 ## we need this to load the pickled data into Python.
@@ -19,7 +19,8 @@ def load(file_name):
     return obj
 
 ## Paths to all datasets. Change accordingly.
-PATH = '/home/vladimir/teaching/AI/project_01/datasets/tflearn/'
+PATH = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
+NETPATH = '/home/nicksorenson/School/intellSys/project01/brains/annAudioBrains/'
 BUZZ1_base_path = PATH + 'BUZZ1/'
 BUZZ2_base_path = PATH + 'BUZZ2/'
 BUZZ3_base_path = PATH + 'BUZZ3/'
@@ -125,6 +126,175 @@ def load_audio_ann_model(model_path):
     model = tflearn.DNN(fc_layer_2)
     model.load(model_path)
     return model
+def __ann_256X10_relu_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 256,
+                                 activation='relu',
+                                name='fc_layer_1')
+    net = fully_connected(net, 10,
+                                 activation='softmax',
+                                 name='fc_layer_2')
+    net = fully_connected(net, 3,
+                                 activation='softmax',
+                                 name='fc_layer_3')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_256X10_relu(learn_rate = 0.04):
+    return __ann_256X10_relu_template(learn_rate)
+def load_256X10_relu(model_path, learn_rate = 0.04):
+    model = __ann_256X10_relu_template(learn_rate)
+    model.load(model_path)
+    return model
+def __ann_128X128X10_relu_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 128,
+                                 activation='relu',
+                                name='fc_layer_1')
+    net = fully_connected(net, 128,
+                                 activation='relu',
+                                name='fc_layer_2')
+ 
+    net = fully_connected(net, 10,
+                                 activation='softmax',
+                                 name='fc_layer_3')
+    net = fully_connected(net, 3,
+                                 activation='softmax',
+                                 name='fc_layer_4')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_128X128X10_relu(learn_rate = 0.04):
+    return __ann_128X128X10_relu_template(learn_rate)
+def load_128X128X10_relu(model_path, learn_rate = 0.04):
+    model = __ann_128X128X10_relu_template(learn_rate)
+    model.load(model_path)
+    return model
+def __ann_256X10X2_sigmoid_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 256,
+                                 activation='sigmoid',
+                                name='fc_layer_1')
+    net = fully_connected(net, 10,
+                                 activation='sigmoid',
+                                name='fc_layer_2')
+ 
+    net = fully_connected(net, 3,
+                                 activation='sigmoid',
+                                 name='fc_layer_3')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_256X10X2_sigmoid(learn_rate = 0.04):
+    return __ann_256X10X2_sigmoid_template(learn_rate)
+def load_256X10X2_sigmoid(model_path, learn_rate = 0.04):
+    model = __ann_256X10X2_sigmoid_template(learn_rate)
+    model.load(model_path)
+    return model
+def __ann_256_sigmoid_10X2_tanh_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 256,
+                                 activation='sigmoid',
+                                name='fc_layer_1')
+    net = fully_connected(net, 10,
+                                 activation='tanh',
+                                name='fc_layer_2')
+ 
+    net = fully_connected(net, 3,
+                                 activation='tanh',
+                                 name='fc_layer_3')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_256_sigmoid_10X2_tanh(learn_rate = 0.04):
+    return __ann_256_sigmoid_10X2_tanh_template(learn_rate)
+def load_256_sigmoid_10X2_tanh(model_path, learn_rate = 0.04):
+    model = __ann_256_sigmoid_10X2_tanh_template(learn_rate)
+    model.load(model_path)
+    return model
+def __ann_500_relu_X10_softmax_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 500,
+                                 activation='relu',
+                                name='fc_layer_1')
+    net = dropout(net, 0.8)
+    net = fully_connected(net, 10,
+                                 activation='softmax',
+                                name='fc_layer_2')
+ 
+    net = fully_connected(net, 3,
+                                 activation='softmax',
+                                 name='fc_layer_3')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_500_relu_X10_softmax(learn_rate = 0.04):
+    return __ann_500_relu_X10_softmax_template(learn_rate)
+def load_500_relu_X10_softmax(model_path, learn_rate = 0.04):
+    model = __ann_500_relu_X10_softmax_template(learn_rate)
+    model.load(model_path)
+    return model
+def __ann_200_tanh_X10_softmax_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 200,
+                                 activation='tanh',
+                                name='fc_layer_1')
+    # net = dropout(net, 0.8)
+    net = fully_connected(net, 10,
+                                 activation='softmax',
+                                name='fc_layer_2')
+ 
+    net = fully_connected(net, 3,
+                                 activation='softmax',
+                                 name='fc_layer_3')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_200_tanh_X10_softmax(learn_rate = 0.04):
+    return __ann_200_tanh_X10_softmax_template(learn_rate)
+def load_200_tanh_X10_softmax(model_path, learn_rate = 0.04):
+    model = __ann_200_tanh_X10_softmax_template(learn_rate)
+    model.load(model_path)
+def __ann_200_relu_X10_softmax_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = fully_connected(net, 200,
+                                 activation='relu',
+                                name='fc_layer_1')
+    # net = dropout(net, 0.8)
+    net = fully_connected(net, 10,
+                                 activation='softmax',
+                                name='fc_layer_2')
+ 
+    net = fully_connected(net, 3,
+                                 activation='softmax',
+                                 name='fc_layer_3')                             
+    net = regression(net,
+                         optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate)
+    return tflearn.DNN(net)
+def make_200_relu_X10_softmax(learn_rate = 0.04):
+    return __ann_200_relu_X10_softmax_template(learn_rate)
+def load_200_relu_X10_softmax(model_path, learn_rate = 0.04):
+    model = __ann_200_relu_X10_softmax_template(learn_rate)
+    model.load(model_path)
+    return model
+ 
+ 
+
+
 
 ### test a tfl network model on valid_X and valid_Y.  
 def test_tfl_audio_ann_model(network_model, valid_X, valid_Y):
@@ -137,7 +307,7 @@ def test_tfl_audio_ann_model(network_model, valid_X, valid_Y):
 
 ###  train a tfl model on train_X, train_Y, test_X, test_Y.
 def train_tfl_audio_ann_model(model, train_X, train_Y, test_X, test_Y, num_epochs=2, batch_size=10):
-  tf.reset_default_graph()
+  tf.compat.v1.reset_default_graph()
   model.fit(train_X, train_Y, n_epoch=num_epochs,
             shuffle=True,
             validation_set=(test_X, test_Y),
