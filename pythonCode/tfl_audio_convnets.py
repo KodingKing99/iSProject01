@@ -322,6 +322,38 @@ def load_32_relu_1conv(model_path, learn_rate=0.04):
     model = __32X_1conv_template(learn_rate)
     model.load(model_path)
     return model
+def __100X3_2conv_template(learn_rate):
+    net = input_data(shape=[None, 4000, 1, 1])
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=5,
+                        activation='relu',
+                        name='conv_layer_1')
+    net = max_pool_2d(net, 2, name='pool_layer')
+    net = conv_2d(net, nb_filter=10,
+                        filter_size=5,
+                        activation='relu',
+                        name='conv_layer_2')
+    net = max_pool_2d(net, 2)
+    net = fully_connected(net, 100,
+                            activation='relu',
+                            name='fc_layer_1')
+    # net = fully_connected(net, ,
+    #                         activation='softmax',
+    #                         name='fc_layer_2')
+    # net = dropout(net, 0.9)
+    net = fully_connected(net, 3,
+                            activation='softmax',
+                            name='fc_layer_3')
+    net = regression(net, optimizer='sgd',
+                         loss='categorical_crossentropy',
+                         learning_rate=learn_rate) 
+    return tflearn.DNN(net)
+def make_100X3_2conv(learn_rate=0.1):
+    return __100X3_2conv_template(learn_rate)
+def load_100X3_2conv(model_path, learn_rate=0.1):
+    model = __100X3_2conv_template(learn_rate)
+    model.load(model_path)
+    return model
 def test_tfl_audio_convnet_model(network_model, valid_X, valid_Y):
     results = []
     for i in range(len(valid_X)):

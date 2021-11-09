@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/brains/cnAudioBrains/aud_cn.tfl"
-all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/brains/cnAudioBrains/aud_cn.tfl"
+model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/brains/cnAudioBrains/100X3_2conv_bigboy.tfl"
+all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/brains/cnAudioBrains/100X3_2conv_bigboy.tfl"
