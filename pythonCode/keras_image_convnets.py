@@ -21,7 +21,7 @@ tf.random.set_seed(1234)
 
 ### change as necessary; this is the path where ConvNet models
 ### are persisted.
-MODEL_PATH = '/home/vladimir/teaching/AI/project_01/keras_models'
+MODEL_PATH = '/home/nicksorenson/School/intellSys/project01/brains/kerasBrains'
 MODEL_NAME = 'keras_img_model'
 
 # Define a simple sequential model with Keras
@@ -41,7 +41,23 @@ def create_keras_model(learning_rate=0.01, weight_decay=0.001, dropout=0.2):
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
     return model
-
+# Define a simple sequential model with Keras
+# def create_keras_model(learning_rate=0.01, weight_decay=0.001, dropout=0.2):
+#     model = keras.models.Sequential([
+#         ### 32 filters, each of which is 3x3, padding="same" means that the output
+#         ### is of the same size of the input, which in this case will be 64x64.
+#         keras.layers.Conv2D(32, (3, 3), padding="same", activation='relu', input_shape=(64, 64, 3)),
+#         keras.layers.MaxPooling2D((2,2)),
+#         keras.layers.Flatten(),
+#         keras.layers.Dropout(dropout),
+#         keras.layers.Dense(256, activation='relu', kernel_regularizer=keras.regularizers.l2(weight_decay)),
+#         keras.layers.Dense(num_classes, activation='softmax')
+#     ])
+#     opt = keras.optimizers.Adam(learning_rate=learning_rate)
+#     model.compile(optimizer=opt,
+#                   loss='categorical_crossentropy',
+#                   metrics=['accuracy'])
+#     return model
 def train_keras_model(learning_rate=0.01, weight_decay=0.001, dropout=0.2, epochs=5):
     # Create a basic model instance
     model = create_keras_model(learning_rate, weight_decay, dropout)

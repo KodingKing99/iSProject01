@@ -10,7 +10,7 @@ import numpy as np
 import tensorflow as tf
 from skimage import io, color, transform
 
-basepath='/home/nicksorenson/School/intellSys/project01/datasets/'
+basepath='/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
 IMG_WIDTH  = 64
 IMG_HEIGHT = 64
 
