@@ -21,7 +21,8 @@ def load(file_name):
 
 ## Paths to all datasets. Change accordingly.
 PATH = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
-NETPATH = '/home/nicksorenson/School/intellSys/project01/cnBrains/'
+NETPATH = '/home/nicksorenson/School/intellSys/project01/brains/cnBrains/'
+SAVEPATH = '/home/nicksorenson/School/intellSys/project01/models/'
 BEE1_path     = PATH + 'BEE1/'
 BEE2_1S_path  = PATH + 'BEE2_1S/'
 BEE4_path     = PATH + 'BEE4/'
@@ -139,7 +140,9 @@ def make_1conv_256X10_relu_model(learn_rate=0.1):
                                 learning_rate=learn_rate)
     model = tflearn.DNN(network)
     return model
-def load_1conv_256X10_relu_model(model_path, learn_rate=0.1):
+### Final Convnet model shape 
+# def load_1conv_256X10_relu_model(model_path,):
+def load_image_convnet_model(model_path,  learn_rate=0.1):
     input_layer = input_data(shape=[None, 64, 64, 3])
     conv_layer_1 = conv_2d(input_layer,
                                 nb_filter=10,
@@ -212,23 +215,24 @@ def make_2conv_40X10Filter_256X10_relu_model(learn_rate=0.04):
                                 learning_rate=learn_rate)
     model = tflearn.DNN(network)
     return model
-def load_image_convnet_model(model_path):
-    input_layer = input_data(shape=[None, 64, 64, 3])
-    conv_layer_1 = conv_2d(input_layer,
-                           nb_filter=8,
-                           filter_size=3,
-                           activation='relu',
-                           name='conv_layer_1')
-    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
-    fc_layer_1 = fully_connected(pool_layer_1, 128,
-                                 activation='relu',
-                                 name='fc_layer_1')
-    fc_layer_2 = fully_connected(fc_layer_1, 2,
-                                 activation='softmax',
-                                 name='fc_layer_2')
-    model = tflearn.DNN(fc_layer_2)
-    model.load(model_path)
-    return model
+# def load_image_convnet_model(model_path):
+    # input_layer = input_data(shape=[None, 64, 64, 3])
+    # conv_layer_1 = conv_2d(input_layer,
+    #                        nb_filter=8,
+    #                        filter_size=3,
+    #                        activation='relu',
+    #                        name='conv_layer_1')
+    # pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    # fc_layer_1 = fully_connected(pool_layer_1, 128,
+    #                              activation='relu',
+    #                              name='fc_layer_1')
+    # fc_layer_2 = fully_connected(fc_layer_1, 2,
+    #                              activation='softmax',
+    #                              name='fc_layer_2')
+    # model = tflearn.DNN(fc_layer_2)
+    # model.load(model_path)
+    # return model
+
 
 def load_1conv_40Filter_256X10_relu_model(model_path, learn_rate=0.04):
     input_layer = input_data(shape=[None, 64, 64, 3])

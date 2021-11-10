@@ -67,7 +67,6 @@ def makeBigData():
     # big_data_train_X = np.append(big_data_train_X, BEE2_1S_gray_train_X, axis=0)
     # big_data_train_X = np.append(big_data_train_X, BEE4_gray_train_X)
 # myann = load_and_train_254X10_relu(NETPATH + '256X10_relu_post_B2.tfl')
-
 big_data_train_X, big_data_train_Y, big_data_test_X, big_data_test_Y = makeBigData()
 print(big_data_train_X.shape)
 print(big_data_train_Y.shape)
@@ -81,10 +80,10 @@ print(big_data_test_Y.shape)
 #     # del big_data_train_X
 #     validate3(myann)
 #     myann.save(NETPATH + '256X10_relu_bigData_lr_' + str(i) + '.tfl')
-def trainANNs():
-    myann = load_and_train_254X10_relu(NETPATH + 'image_ann.tfl', learn_rate=0.04)
-    train_tfl_image_ann_model(myann, big_data_train_X, big_data_train_Y, big_data_test_X, big_data_test_Y, num_epochs=20)
-    validate3(myann)
-    myann.save(NETPATH + 'image_ann.tfl')
-def trainConvNets():
-    print("training conv nets...")
+# def trainANNs():
+    # myann = load_and_train_254X10_relu(NETPATH + 'image_ann.tfl', learn_rate=0.04)
+    # train_tfl_image_ann_model(myann, big_data_train_X, big_data_train_Y, big_data_test_X, big_data_test_Y, num_epochs=20)
+    # validate3(myann)
+    # myann.save(NETPATH + 'image_ann.tfl')
+# def trainConvNets():
+    # print("training conv nets...")

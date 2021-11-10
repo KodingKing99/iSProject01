@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/nicksorenson/School/intellSys/project01/models/image_cn.tfl"
+all_model_checkpoint_paths: "/home/nicksorenson/School/intellSys/project01/models/image_cn.tfl"

@@ -116,16 +116,17 @@ def make_audio_ann_model():
 ### Note that the load function must mimick the
 ### the archictecture of the persisted model!!!
 def load_audio_ann_model(model_path):
-    input_layer = input_data(shape=[None, 4000, 1, 1])
-    fc_layer_1 = fully_connected(input_layer, 128,
-                                 activation='relu',
-                                 name='fc_layer_1')
-    fc_layer_2 = fully_connected(fc_layer_1, 3,
-                                 activation='softmax',
-                                 name='fc_layer_2')
-    model = tflearn.DNN(fc_layer_2)
-    model.load(model_path)
-    return model
+    # input_layer = input_data(shape=[None, 4000, 1, 1])
+    # fc_layer_1 = fully_connected(input_layer, 128,
+    #                              activation='relu',
+    #                              name='fc_layer_1')
+    # fc_layer_2 = fully_connected(fc_layer_1, 3,
+    #                              activation='softmax',
+    #                              name='fc_layer_2')
+    # model = tflearn.DNN(fc_layer_2)
+    # model.load(model_path)
+    # return model
+    return load_200_relu_X10_softmax(model_path)
 def __ann_256X10_relu_template(learn_rate):
     net = input_data(shape=[None, 4000, 1, 1])
     net = fully_connected(net, 256,

@@ -22,6 +22,7 @@ def load(file_name):
 ## Paths to all datasets. Change accordingly.
 base_path = '/home/nicksorenson/School/intellSys/project01/datasets/tflearn/'
 NETPATH = '/home/nicksorenson/School/intellSys/project01/brains/cnAudioBrains/'
+SAVEPATH = '/home/nicksorenson/School/intellSys/project01/models/'
 
 BUZZ1_base_path = base_path + 'BUZZ1/'
 BUZZ2_base_path = base_path + 'BUZZ2/'
@@ -119,22 +120,23 @@ def make_audio_convnet_model():
     return model
 
 def load_audio_convnet_model(model_path):
-    input_layer = input_data(shape=[None, 4000, 1, 1])
-    conv_layer_1 = conv_2d(input_layer,
-                           nb_filter=8,
-                           filter_size=3,
-                           activation='relu',
-                           name='conv_layer_1')
-    pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
-    fc_layer_1 = fully_connected(pool_layer_1, 128,
-                                 activation='relu',
-                                 name='fc_layer_1')
-    fc_layer_2 = fully_connected(fc_layer_1, 3,
-                                 activation='softmax',
-                                 name='fc_layer_2')
-    model = tflearn.DNN(fc_layer_2)
-    model.load(model_path)
-    return model
+    return load_256X10_relu_1conv(model_path)
+    # input_layer = input_data(shape=[None, 4000, 1, 1])
+    # conv_layer_1 = conv_2d(input_layer,
+    #                        nb_filter=8,
+    #                        filter_size=3,
+    #                        activation='relu',
+    #                        name='conv_layer_1')
+    # pool_layer_1 = max_pool_2d(conv_layer_1, 2, name='pool_layer_1')
+    # fc_layer_1 = fully_connected(pool_layer_1, 128,
+    #                              activation='relu',
+    #                              name='fc_layer_1')
+    # fc_layer_2 = fully_connected(fc_layer_1, 3,
+    #                              activation='softmax',
+    #                              name='fc_layer_2')
+    # model = tflearn.DNN(fc_layer_2)
+    # model.load(model_path)
+    # return model
 def __200X10X3_1conv_template(learn_rate):
     net = input_data(shape=[None, 4000, 1, 1])
     net = conv_2d(net, nb_filter=10,

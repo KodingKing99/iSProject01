@@ -181,17 +181,17 @@ def make_4_layer_512X256X10X2_relu(learn_rate=0.1):
         
 ### Note that the load function must mimick the
 ### the archictecture of the persisted model!!!
-def load_image_ann_model(model_path):
-    input_layer = input_data(shape=[None, 64, 64, 1])
-    fc_layer_1 = fully_connected(input_layer, 128,
-                                 activation='relu',
-                                 name='fc_layer_1')
-    fc_layer_2 = fully_connected(fc_layer_1, 2,
-                                 activation='softmax',
-                                 name='fc_layer_2')
-    model = tflearn.DNN(fc_layer_2)
-    model.load(model_path)
-    return model
+# def load_image_ann_model(model_path):
+#     input_layer = input_data(shape=[None, 64, 64, 1])
+#     fc_layer_1 = fully_connected(input_layer, 128,
+#                                  activation='relu',
+#                                  name='fc_layer_1')
+#     fc_layer_2 = fully_connected(fc_layer_1, 2,
+#                                  activation='softmax',
+#                                  name='fc_layer_2')
+#     model = tflearn.DNN(fc_layer_2)
+#     model.load(model_path)
+#     return model
 def load_3_layer_254X10_relu(model_path):
     input_layer = input_data(shape=[None, 64, 64, 1])
     fc_layer_1 = fully_connected(input_layer, 256,
@@ -226,7 +226,7 @@ def load_4_layer_1024X512X256X2_sigmoid(model_path):
     model = tflearn.DNN(fc_layer_4)
     model.load(model_path)
     return model
-def load_and_train_254X10_relu(model_path, learn_rate=0.1):
+def load_image_ann_model(model_path, learn_rate=0.1):
     input_layer = input_data(shape=[None, 64, 64, 1])
     fc_layer_1 = fully_connected(input_layer, 256,
                                 activation='relu',
